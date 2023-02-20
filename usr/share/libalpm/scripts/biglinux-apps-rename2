@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # kate (renomeia)
-echo "Verificando o arquivo org.kde.kate.desktop"
-if [ -f /usr/share/applications/org.kde.kate.desktop ]; then
-	sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Anotações|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|Development;||g' /usr/share/applications/org.kde.kate.desktop
-fi
+	# echo "Verificando o arquivo org.kde.kate.desktop"
+# 	if [ -f /usr/share/applications/org.kde.kate.desktop ]; then
+#		sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Anotações|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|Development;||g' /usr/share/applications/org.kde.kate.desktop
+#	fi
 
 # kwrite (oculta)
 echo "Verificando o arquivo org.kde.kwrite.desktop"

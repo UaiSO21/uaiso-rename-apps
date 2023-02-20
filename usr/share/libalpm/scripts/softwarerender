@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#pegar o nome dos programas no Target do hook
+for i in $(grep -oP "Target = \K.*" /usr/share/libalpm/hooks/softwarerender.hook); do
+
+#Verificar se já tem softwarerender no .desktop, evitar duplicar.
+if [ -z "$(grep softwarerender /$i)" ];then
+#Arquivo .desktop
+exec=$(grep -oP "Exec=\K.*" /$i | cut -d " " -f1)
+
+#Escrever no arquivo
+echo "
+Actions=softwarerender;
+
+[Desktop Action softwarerender]
+Name=Software Render
+Exec=LIBGL_ALWAYS_SOFTWARE=1 $exec" >> /$i
+#Update database of desktop entries
+update-desktop-database /usr/share/applications
+fi
+done

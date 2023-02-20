@@ -1,0 +1,721 @@
+#!/bin/sh
+
+# kate (renomeia)
+echo "Verificando o arquivo org.kde.kate.desktop"
+if [ -f /usr/share/applications/org.kde.kate.desktop ]; then
+	sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Anotações|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|Development;||g' /usr/share/applications/org.kde.kate.desktop
+fi
+
+# kwrite (oculta)
+echo "Verificando o arquivo org.kde.kwrite.desktop"
+if [ -f /usr/share/applications/org.kde.kwrite.desktop ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/org.kde.kwrite.desktop
+fi
+
+# compton-conf.desktop (oculta no Plasma)
+echo "Verificando o arquivo compton-conf.desktop"
+if [ -f /usr/share/applications/compton-conf.desktop ]; then
+	sed -i 's|Categories=|NotShowIn=KDE\nCategories=|' /usr/share/applications/compton-conf.desktop
+fi
+
+# pcmanfm-qt-desktop-pref (oculta do Plasma)
+echo "Verificando o arquivo pcmanfm-qt-desktop-pref "
+if [ -f /usr/share/applications/pcmanfm-qt-desktop-pref.desktop ]; then
+	sed -i 's|Categories=|NotShowIn=KDE\nCategories=|' /usr/share/applications/pcmanfm-qt-desktop-pref.desktop
+fi
+
+# pcmanfm-qt-desktop (renomeia e oculta no Plasma)
+echo "Verificando o arquivo pcmanfm-qt.desktop"
+	if [ -f /usr/share/applications/pcmanfm-qt.desktop ]; then
+		sed -i 's|Categories=|NotShowIn=KDE\nCategories=|' /usr/share/applications/pcmanfm-qt.desktop
+		PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/pcmanfm-qt.desktop)
+	if [ -z "$PT_BR_LINE" ]; then
+		# Linha Name[pt_BR]= NÃO foi encontrada
+		sed -i '$ a\Name[pt_BR]=Gerenciador de Arquivos' /usr/share/applications/pcmanfm-qt.desktop
+	else
+		# Linha Name[pt_BR]= FOI encontrada
+		sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Gerenciador de Arquivos/" /usr/share/applications/pcmanfm-qt.desktop
+	fi
+	fi
+
+# kdenlive (força execução em QT)
+echo "Verificando o arquivo org.kde.kdenlive.desktop"
+if [ -f /usr/share/applications/org.kde.kdenlive.desktop ]; then
+	sed -i 's|Exec=kdenlive|Exec=QT_QUICK_BACKEND="" kdenlive|g' /usr/share/applications/org.kde.kdenlive.desktop
+fi
+
+# steam (ediga a categoria)
+echo "Verificando o arquivo steam.desktop"
+if [ -f /usr/share/applications/steam.desktop ]; then
+	sed -i 's|Steam (Runtime)|Steam|g;s|Categories=Network;FileTransfer;Game;|Categories=Game;|g' /usr/share/applications/steam.desktop
+fi
+
+# Gufw (renomeia, edita categoria e ajustes)
+echo "Verificando o arquivo gufw.desktop"
+if [ -f /usr/share/applications/gufw.desktop ]; then
+	sed -i 's|Name=.*|Name=Firewall|g;s|Categories=.*|Categories=System|g' /usr/share/applications/gufw.desktop
+	sed -i 's|pkexec gufw-pkexec|pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY gufw-pkexec|g' /usr/bin/gufw
+fi
+
+# obconf-qt (oculta do Plasma)
+echo "Verificando o arquivo obconf-qt.desktop"
+if [ -f /usr/share/applications/obconf-qt.desktop ]; then
+	sed -i 's|Categories=|NotShowIn=KDE\nCategories=|' /usr/share/applications/obconf-qt.desktop
+fi
+
+# xscreensaver-properties (oculta no Plasma)
+echo "Verificando o arquivo xscreensaver-properties.desktop"
+if [ -f /usr/share/applications/xscreensaver-properties.desktop ]; then
+	sed -i 's|Categories=|NotShowIn=KDE\nCategories=|' /usr/share/applications/xscreensaver-properties.desktop
+fi
+
+# KDE connect (oculta e nenomeia)
+echo "Verificando o arquivo org.kde.kdeconnect_open.desktop"
+if [ -f /usr/share/applications/org.kde.kdeconnect.sms.desktop ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/org.kde.kdeconnect.sms.desktop
+fi
+if [ -f /usr/share/applications/org.kde.kdeconnect_open.desktop ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/org.kde.kdeconnect_open.desktop
+fi
+if [ -f /usr/share/applications/org.kde.kdeconnect.app.desktop ]; then
+	sed -i 's|kdeconnect-app|kdeconnect-settings|g;s|Name\[pt_BR\]=.*|Name[pt_BR]=Interagir com dispositivos Android|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|Categories=Qt;KDE;Network|Categories=Qt;KDE;Utility|g;' /usr/share/applications/org.kde.kdeconnect.app.desktop
+fi
+
+# network manager (oculta)
+echo "Verificando o arquivo nm-connection-editor.desktop "
+if [ -f /usr/share/applications/nm-connection-editor.desktop  ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/nm-connection-editor.desktop 
+fi
+
+# ipython (oculta)
+echo "Verificando o arquivo ipython.desktop"
+if [ -f /usr/share/applications/ipython.desktop  ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/ipython.desktop
+fi
+
+# imagemagick (oculta)
+echo "Verificando o arquivo display-im6.q16.desktop"
+if [ -f /usr/share/applications/display-im6.q16.desktop ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/display-im6.q16.desktop
+fi
+
+# libreoffice (oculta)
+echo "Verificando o arquivo libreoffice-startcenter.desktop"
+if [ -f /usr/share/applications/libreoffice-startcenter.desktop  ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/libreoffice-startcenter.desktop
+fi
+
+# urxvt (oculta)
+echo "Verificando o arquivo urxvt.desktop"
+	if [ -f /usr/share/applications/urxvt.desktop  ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/urxvtc.desktop
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/urxvt.desktop
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/urxvt-tabbed.desktop
+	fi
+
+# libreoffice xsltfilter
+echo "Verificando o arquivo xsltfilter.desktop"
+	if [ -f /usr/lib/libreoffice/share/xdg/xsltfilter.desktop ]; then
+		if [ "$(grep -c 'Name\[pt_BR\]=' /usr/lib/libreoffice/share/xdg/xsltfilter.desktop)" = "0" ] && [ -e "/usr/lib/libreoffice/share/xdg/xsltfilter.desktop" ]; then
+			cp -f /usr/share/biglinux/applications-name/xsltfilter.desktop /usr/lib/libreoffice/share/xdg/xsltfilter.desktop
+		fi
+	fi
+
+# libreoffice math
+echo "Verificando o arquivo math.desktop"
+	if [ -f /usr/lib/libreoffice/share/xdg/math.desktop ]; then
+		if [ "$(grep -c 'Name\[pt_BR\]=' /usr/lib/libreoffice/share/xdg/math.desktop)" = "0" ] && [ -e "/usr/lib/libreoffice/share/xdg/math.desktop" ]; then
+			cp -f /usr/share/biglinux/applications-name/math.desktop /usr/lib/libreoffice/share/xdg/math.desktop
+		fi
+	fi
+
+# libreoffice impress
+echo "Verificando o arquivo impress.desktop"
+	if [ -f /usr/lib/libreoffice/share/xdg/impress.desktop ]; then
+		if [ "$(grep -c 'Name\[pt_BR\]=' /usr/lib/libreoffice/share/xdg/impress.desktop)" = "0" ] && [ -e "/usr/lib/libreoffice/share/xdg/impress.desktop" ]; then
+			cp -f /usr/share/biglinux/applications-name/impress.desktop /usr/lib/libreoffice/share/xdg/impress.desktop
+		fi
+	fi
+
+# libreoffice base
+echo "Verificando o arquivo base.desktop"
+	if [ -f /usr/lib/libreoffice/share/xdg/base.desktop ]; then
+		if [ "$(grep -c 'Name\[pt_BR\]=' /usr/lib/libreoffice/share/xdg/base.desktop)" = "0" ] && [ -e "/usr/lib/libreoffice/share/xdg/base.desktop" ]; then
+			cp -f /usr/share/biglinux/applications-name/base.desktop /usr/lib/libreoffice/share/xdg/base.desktop
+		fi
+	fi
+
+# libreoffice calc
+echo "Verificando o arquivo calc.desktop"
+	if [ -f /usr/lib/libreoffice/share/xdg/calc.desktop ]; then
+		if [ "$(grep -c 'Name\[pt_BR\]=' /usr/lib/libreoffice/share/xdg/calc.desktop)" = "0" ] && [ -e "/usr/lib/libreoffice/share/xdg/calc.desktop" ]; then
+			cp -f /usr/share/biglinux/applications-name/calc.desktop /usr/lib/libreoffice/share/xdg/calc.desktop
+		fi
+	fi
+
+# libreoffice draw
+echo "Verificando o arquivo draw.desktop"
+	if [ -f /usr/lib/libreoffice/share/xdg/draw.desktop ]; then
+		if [ "$(grep -c 'Name\[pt_BR\]=' /usr/lib/libreoffice/share/xdg/draw.desktop)" = "0" ] && [ -e "/usr/lib/libreoffice/share/xdg/draw.desktop" ]; then
+			cp -f /usr/share/biglinux/applications-name/draw.desktop /usr/lib/libreoffice/share/xdg/draw.desktop
+		fi
+	fi
+
+# libreoffice writer
+echo "Verificando o arquivo writer.desktop"
+	if [ -f /usr/lib/libreoffice/share/xdg/writer.desktop ]; then
+		if [ "$(grep -c 'Name\[pt_BR\]=' /usr/lib/libreoffice/share/xdg/writer.desktop)" = "0" ] && [ -e "/usr/lib/libreoffice/share/xdg/writer.desktop" ]; then
+			cp -f /usr/share/biglinux/applications-name/writer.desktop /usr/lib/libreoffice/share/xdg/writer.desktop
+		fi
+	fi
+
+# gimp (renomeia)
+echo "Verificando o arquivo gimp.desktop"
+	if [ -f /usr/share/applications/gimp.desktop  ]; then
+		sed -i "s|Name\[pt_BR\]=Editor de imagem|Name[pt_BR]=Editor de imagens Gimp|g" /usr/share/applications/gimp.desktop
+	fi
+
+# xscreensaver
+echo "Verificando o arquivo xscreensaver-properties.desktop"
+	if [ -f /usr/share/applications/xscreensaver-properties.desktop  ]; then
+		if [ "$(grep 'Name\[pt]' /usr/share/applications/xscreensaver-properties.desktop)" = "" ] && [ -e "/usr/share/applications/xscreensaver-properties.desktop" ]; then
+    		echo 'Name[pt]=Protetor de tela
+			GenericName[pt]=
+			Comment[pt]=' >> /usr/share/applications/xscreensaver-properties.desktop
+		fi
+	fi  
+
+# simple-scan
+echo "Verificando o arquivo simple-scan.desktop"
+	if [ -f /usr/share/applications/simple-scan.desktop ]; then
+		if [ "$(grep 'Name\[pt]' /usr/share/applications/simple-scan.desktop)" = "" ] && [ -e "/usr/share/applications/simple-scan.desktop" ]; then
+    		echo 'Name[pt]=Digitalizador de imagens
+			GenericName[pt]=
+			Comment[pt]=' >> /usr/share/applications/simple-scan.desktop
+		fi
+	fi
+
+# skanpage
+echo "Verificando o arquivo org.kde.skanpage.desktop"
+	if [ -f /usr/share/applications/org.kde.skanpage.desktop ]; then
+		sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Digitalizador de imagens Skanpage|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.skanpage.desktop
+	fi
+
+# KWalletManager
+echo "Verificando o arquivo org.kde.kwalletmanager5.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Gerenciar senhas no sistema|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.kwalletmanager5.desktop
+
+# okular
+echo "Verificando o arquivo org.kde.okular.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Visualizador de PDF, Epub e outros|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|Categories=.*|Categories=Qt;KDE;Office;Viewer;|g' /usr/share/applications/org.kde.okular.desktop
+
+# Gwenview
+echo "Verificando o arquivo org.kde.gwenview.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Visualizador de imagens|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.gwenview.desktop
+
+#kmines
+echo "Verificando o arquivo org.kde.kmines.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Campo minado|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.kmines.desktop
+
+#guvcview (rennomeia)
+echo "Verificando o arquivo guvcview.desktop"
+if [ "$(grep 'Name\[pt]=guvcview' /usr/share/applications/guvcview.desktop)" != "" ]; then
+    sed -i 's|Name\[pt_BR\]=guvcview|Name\[pt_BR\]=Webcam Guvc|g;s|Name\[pt\]=guvcview|Name\[pt\]=Webcam Guvc|g;s|GenericName\[pt_BR\]=Visualizador de vídeo GTK UVC|GenericName\[pt_BR\]=|g;s|GenericName\[pt\]=Visualizador de vídeo GTK UVC|GenericName\[pt\]=|g;s|^Exec=guvcview$|Exec=guvcview-verify-busy|g' /usr/share/applications/guvcview.desktop
+fi
+
+# vokoscreenNG
+echo "Verificando o arquivo vokoscreenNG.desktop"
+if [ "$(grep 'Name\[pt_BR\]=' /usr/share/applications/vokoscreenNG.desktop)" = "" ]; then
+    sed -i '/Name=/a Name[pt_BR]=Gravador de tela Voko\nComment[pt_BR]=' /usr/share/applications/vokoscreenNG.desktop
+    sed -i '/Name=/a Name[pt]=Gravador de tela Voko\nComment[pt]=' /usr/share/applications/vokoscreenNG.desktop
+fi
+
+# SimpleScreenRecorder
+echo "Verificando o arquivo simplescreenrecorder.desktop"
+if [ "$(grep 'Name\[pt_BR\]=' /usr/share/applications/simplescreenrecorder.desktop)" = "" ]; then
+    sed -i '/Name=/a Name[pt_BR]=Gravador de tela\nComment[pt_BR]=' /usr/share/applications/simplescreenrecorder.desktop
+    sed -i '/Name=/a Name[pt]=Gravador de tela\nComment[pt]=' /usr/share/applications/simplescreenrecorder.desktop
+fi
+
+# pavucontrol-qt
+echo "Verificando o arquivo pavucontrol-qt.desktop"
+sed -i 's|multimedia-volume-control|audio-volume-high|g;s|Name\[pt\]=.*|Name[pt]=Som e microfone|g;s|GenericName\[pt\]=.*|GenericName[pt]=|g;s|Categories=.*|Categories=Settings;Audio;Mixer;Qt;|g' /usr/share/applications/pavucontrol-qt.desktop
+sed -i 's|multimedia-volume-control|audio-volume-high|g'/usr/share/applications/pavucontrol-qt.desktop
+
+# Clementine
+echo "Verificando o arquivo clementine.desktop"
+if [ "$(grep 'Name\[pt_BR\]=Músicas' /usr/share/applications/clementine.desktop)" = "" ] && [ -e "/usr/share/applications/clementine.desktop" ]; then
+    sed -i '/GenericName\[pt\]=/a Name[pt_BR]=Músicas\nGenericName[pt_BR]= \nComment[pt_BR]=' /usr/share/applications/clementine.desktop
+fi
+
+# Lutris
+echo "Verificando o arquivo net.lutris.Lutris.desktop"
+sed -i 's|Comment\[pt-BR\]=.*|Name[pt]=Plataforma de jogos Lutris|g;s|Comment\[id\]=.*|Comment[pt]=|g' /usr/share/applications/net.lutris.Lutris.desktop
+
+# smplayer
+echo "Verificando o arquivo smplayer.desktop"
+sed -i "s|Name\[pt_BR\]=SMPlayer|Name[pt_BR]=Vídeos|g" /usr/share/applications/smplayer.desktop
+
+# calculadora
+echo "Verificando o arquivo org.gnome.Calculator.desktop"
+if [ "$(grep 'GenericName\[pt]' /usr/share/applications/org.gnome.Calculator.desktop)" = "" ] && [ -e "/usr/share/applications/org.gnome.Calculator.desktop" ]; then
+    echo 'GenericName[pt]=Calculadora' >> /usr/share/applications/org.gnome.Calculator.desktop
+    echo 'Name[pt]=Calculadora' >> /usr/share/applications/org.gnome.Calculator.desktop
+fi
+
+# spectacle
+echo "Verificando o arquivo org.kde.spectacle.desktop"
+sed -i 's|Name\[pt_BR\]=Spectacle|Name[pt_BR]=Captura de tela|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.spectacle.desktop
+
+# compton
+echo "Verificando o arquivo compton.desktop"
+sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/compton.desktop
+
+# ark
+echo "Verificando o arquivo org.kde.ark.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Compactador de Arquivos|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.ark.desktop
+
+# kfind
+echo "Verificando o arquivo org.kde.kfind.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Procurar arquivos|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|OnlyShowIn=KDE;||g' /usr/share/applications/org.kde.kfind.desktop
+
+# discover
+echo "Verificando o arquivo org.kde.discover.desktop"
+sed -i 's|Name\[pt_BR\]=Discover|Name[pt_BR]=Loja de aplicativos|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|Categories=.*|Categories=Qt;KDE;Settings;|g' /usr/share/applications/org.kde.discover.desktop
+
+# hardinfo
+echo "Verificando o arquivo hardinfo.desktop"
+if [ "$(grep 'Comment\[pt_BR\]=' /usr/share/applications/hardinfo.desktop)" = "" ]; then
+    sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Informações do Sistema|g' /usr/share/applications/hardinfo.desktop
+fi
+
+# konsole
+echo "Verificando o arquivo org.kde.konsole.desktop"
+sed -i 's|Name\[pt_BR\]=Konsole|Name[pt_BR]=Terminal|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.konsole.desktop
+
+# dolphin
+echo "Verificando o arquivo org.kde.dolphin.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Gerenciador arquivos|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.dolphin.desktop
+
+# mintstick
+echo "Verificando o arquivo mintstick.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Criar pen drive de boot|g' /usr/share/applications/mintstick.desktop
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Criar pen drive de boot|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/mintstick-kde.desktop
+
+# mintstick-format
+echo "Verificando o arquivo mintstick-format.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Formatar pen drive|g' /usr/share/applications/mintstick-format.desktop
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Formatar pen drive|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/mintstick-format-kde.desktop
+
+# system-settings
+echo "Verificando o arquivo kdesystemsettings.desktop"
+sed -i 's|preferences-system|breeze-settings|g;' /usr/share/applications/kdesystemsettings.desktop
+
+# ksysguard
+echo "Verificando o arquivo org.kde.ksysguard.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Gerenciar tarefas|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.ksysguard.desktop
+
+# gparted
+echo "Verificando o arquivo gparted.desktop"
+if [ "$(grep 'Name\[pt]=GParted' /usr/share/applications/gparted.desktop)" != "" ]; then
+    sed -i 's|GenericName\[pt_BR\]=.*||g;s|Name\[pt_BR\]=.*||g;s|GenericName\[pt\]=.*|GenericName[pt]=|g;s|Name\[pt\]=.*|Name[pt]=Formatar ou particionar|g' /usr/share/applications/gparted.desktop
+fi
+
+# onboard
+echo "Verificando o arquivo onboard-settings.desktop"
+rm -f /usr/share/applications/onboard-settings.desktop
+if [ "$(grep 'Name\[pt]' /usr/share/applications/onboard.desktop)" = "" ] && [ -e "/usr/share/applications/onboard.desktop" ]; then
+    echo 'Name[pt]=Teclado virtual
+GenericName[pt]=
+Comment[pt]=' >> /usr/share/applications/onboard.desktop
+sed -i 's|Accessibility;||g' /usr/share/applications/onboard.desktop
+fi
+
+# Chrome
+echo "Verificando o arquivo google-chrome.desktop"
+if [ "$(grep -c 'Name\[pt_BR\]=' /usr/share/applications/google-chrome.desktop)" = "3" ]; then
+    sed -i '/GenericName\[pt_BR\]=/a Name[pt_BR]=Navegador Google Chrome' /usr/share/applications/google-chrome.desktop
+    sed -i 's|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/google-chrome.desktop
+fi
+
+# Brave
+echo "Verificando o arquivo brave-browser.desktop"
+sed -i '/GenericName\[pt_BR\]=Navegador da Internet/a Name[pt_BR]=Navegador Brave' /usr/share/applications/brave-browser.desktop
+
+# firefox
+echo "Verificando o arquivo firefox.desktop"
+sed -i 's|GenericName\[pt_BR\]=.*|Name[pt_BR]=Navegador Firefox|g' /usr/share/applications/firefox.desktop
+
+# qbittorrent
+echo "Verificando o arquivo org.qbittorrent.qBittorrent.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Cliente qBittorrent|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.qbittorrent.qBittorrent.desktop
+
+# kpat
+echo "Verificando o arquivo org.kde.kpat.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Paciência, Freecell e outros|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.kpat.desktop
+
+# klipper
+echo "Verificando o arquivo org.kde.klipper.desktop"
+sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Histórico de copiar e colar|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/org.kde.klipper.desktop
+
+# wps-office-et
+echo "Verificando o arquivo wps-office-et.desktop"
+if [ "$(grep 'Name\[pt_BR\]=' /usr/share/applications/wps-office-et.desktop)" = "" ]; then
+    sed -i '/GenericName=/a Name[pt_BR]=WPS Planilhas (Spreadsheets)\nGenericName[pt_BR]= \nComment[pt_BR]=' /usr/share/applications/wps-office-et.desktop
+fi
+sed -i 's/^/#/' /etc/xdg/menus/applications-merged/wps-office.menu
+
+# wps-office-wpp
+echo "Verificando o arquivo wps-office-wpp.desktop"
+if [ "$(grep 'Name\[pt_BR\]=' /usr/share/applications/wps-office-wpp.desktop)" = "" ]; then
+    sed -i '/GenericName=/a Name[pt_BR]=WPS Apresentações (Presentation)\nGenericName[pt_BR]= \nComment[pt_BR]=' /usr/share/applications/wps-office-wpp.desktop
+fi
+
+# wps-office-wps
+echo "Verificando o arquivo wps-office-wps.desktop"
+if [ "$(grep 'Name\[pt_BR\]=' /usr/share/applications/wps-office-wps.desktop)" = "" ]; then
+    sed -i '/GenericName=/a Name[pt_BR]=WPS Editor de textos (Writer)\nGenericName[pt_BR]= \nComment[pt_BR]=' /usr/share/applications/wps-office-wps.desktop
+fi
+
+# Xscreensaver
+echo "Verificando o arquivo xscreensaver-properties.desktop"
+sed -i 's|Categories=Settings;DesktopSettings;Security;X-XFCE;|Categories=System;DesktopSettings;Security;X-XFCE;|' /usr/share/applications/xscreensaver-properties.desktop
+
+# Openjdk
+echo "Verificando o arquivo openjdk*.desktop"
+sed -i 's|cautious-launcher %f /usr/bin/java -jar|/usr/bin/java -jar %f|' /usr/share/applications/openjdk*.desktop
+if [ "$(grep 'Name\[pt_BR\]=' /usr/share/applications/openjdk-8-policytool.desktop)" = "" ]; then
+    sed -i '/Name=/a Name[pt_BR]=Regras de segurança do Java\nComment[pt_BR]=' /usr/share/applications/openjdk-8-policytool.desktop
+fi
+
+# kde-wacom
+echo "Verificando o arquivo kde_wacom_tabletfinder.desktop"
+sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/kde_wacom_tabletfinder.desktop
+
+# Timeshift
+echo "Verificando o arquivo timeshift-gtk.desktop"
+if [ "$(grep -c 'Name\[pt_BR\]=' /usr/share/applications/timeshift-gtk.desktop)" = "0" ] && [ -e "/usr/share/applications/timeshift-gtk.desktop" ]; then
+    sed -i '/GenericName\[ca\]=/a Name[pt_BR]=Backups e snapshots' /usr/share/applications/timeshift-gtk.desktop
+    echo 'Comment[pt_BR]=' >> /usr/share/applications/timeshift-gtk.desktop
+    echo 'GenericName[pt_BR]=' >> /usr/share/applications/timeshift-gtk.desktop
+    sed -i 's|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g' /usr/share/applications/timeshift-gtk.desktop
+fi
+
+# CTRL+alt+backspace
+echo "Verificando o arquivo keyboard"
+if [ "$(grep 'XKBOPTIONS=""' /etc/default/keyboard)" != "" ]; then
+    sed -i 's|XKBOPTIONS=""|XKBOPTIONS="terminate:ctrl_alt_bksp"|g' /etc/default/keyboard
+fi
+
+# nvidia (renomeia, categoria)
+echo "Verificando o arquivo nvidia-settings.desktop"
+if [ -f /usr/share/applications/nvidia-settings.desktop ]; then
+		sed -i 's|Categories=.*|Categories=Settings;|g' /usr/share/applications/org.manjaro.pamac.manager.desktop
+		PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/nvidia-settings.desktop)
+	if [ -z "$PT_BR_LINE" ]; then
+		# Linha Name[pt_BR]= NÃO foi encontrada
+		sed -i '$ a\Name[pt_BR]=Configure NVIDIA' /usr/share/applications/nvidia-settings.desktop
+	else
+		# Linha Name[pt_BR]= FOI encontrada
+		sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Configure NVIDIA/" /usr/share/applications/nvidia-settings.desktop
+	fi
+fi
+
+# Yad
+echo "Verificando o arquivo yad-icon-browser.desktop"
+sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/yad-icon-browser.desktop
+sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/yad-settings.desktop
+
+# rxvt
+echo "Verificando o arquivo rxvt-unicode.desktop"
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/rxvt-unicode.desktop
+
+# pcsc-tools
+echo "Verificando o arquivo gscriptor.desktop"
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/gscriptor.desktop
+
+# latte
+echo "Verificando o arquivo org.kde.latte-dock.desktop"
+	if [ -f /usr/share/applications/org.kde.latte-dock.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/org.kde.latte-dock.desktop
+	fi
+
+# htop
+echo "Verificando o arquivo htop.desktop"
+	if [ -f /usr/share/applications/htop.desktop ]; then
+	PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/htop.desktop)
+	if [ -z "$PT_BR_LINE" ]; then
+		# Linha Name[pt_BR]= NÃO foi encontrada
+		echo "Name[pt_BR]=Visualizador de Processos" >> /usr/share/applications/htop.desktop
+	else
+		# Linha Name[pt_BR]= FOI encontrada
+		sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Visualizador de Processos/" /usr/share/applications/htop.desktop
+	fi
+	fi
+
+# avahi
+echo "Verificando o arquivo avahi-discover.desktop"
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/avahi-discover.desktop
+echo "Verificando o arquivo bssh.desktop"
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/bssh.desktop
+echo "Verificando o arquivo bvnc.desktop"
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/bvnc.desktop
+
+# Manjaro bootsplah
+echo "Verificando o arquivo bootsplash-manager.desktop"
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/bootsplash-manager.desktop
+
+# kcalc
+echo "Verificando o arquivo org.kde.kcalc.desktop"
+	sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Calculadora/" /usr/share/applications/org.kde.kcalc.desktop
+
+#lxqt-archiver
+echo "Verificando o arquivo lxqt-archiver.desktop"
+	if [ -f /usr/share/applications/lxqt-archiver.desktop ]; then
+	PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/lxqt-archiver.desktop)
+	if [ -z "$PT_BR_LINE" ]; then
+		# Linha Name[pt_BR]= NÃO foi encontrada
+		sed -i '$ a\Name[pt_BR]=Compactador de Arquivos' /usr/share/applications/lxqt-archiver.desktop
+	else
+		# Linha Name[pt_BR]= FOI encontrada
+		sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Compactador de Arquivos/" /usr/share/applications/lxqt-archiver.desktop
+	fi
+	fi
+
+#screengrab
+echo "Verificando o arquivo screengrab.desktop"
+	if [ -f /usr/share/applications/screengrab.desktop ]; then
+	PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/screengrab.desktop)
+		if [ -z "$PT_BR_LINE" ]; then
+			# Linha Name[pt_BR]= NÃO foi encontrada
+			sed -i '$ a\Name[pt_BR]=Captura de Tela' /usr/share/applications/screengrab.desktop
+		else
+			# Linha Name[pt_BR]= FOI encontrada
+			sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Captura de Tela/" /usr/share/applications/screengrab.desktop
+		fi
+	fi
+
+#lximage
+echo "Verificando o arquivo lximage-qt.desktop"
+	if [ -f /usr/share/applications/lximage-qt.desktop ]; then
+	PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/lximage-qt.desktop)
+	if [ -z "$PT_BR_LINE" ]; then
+		# Linha Name[pt_BR]= NÃO foi encontrada
+		echo "Name[pt_BR]=Visualizador de Imagens" >> /usr/share/applications/lximage-qt.desktop
+	else
+		# Linha Name[pt_BR]= FOI encontrada
+		sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Visualizador de Imagens/" /usr/share/applications/lximage-qt.desktop
+	fi
+	fi
+
+# lxqt-config.desktop
+echo "Verificando o arquivo lxqt-config.desktop"
+if [ -f /usr/share/applications/lxqt-config.desktop ]; then
+  # Procura por uma linha que comece com "Name[pt_BR]="
+  if grep -q "^Name\[pt_BR\]=" /usr/share/applications/lxqt-config.desktop; then
+    # Se encontrar, usa o sed para editar a linha
+    sed -i 's/^Name\[pt_BR\].*/Name[pt_BR]=Central de Controle/' /usr/share/applications/lxqt-config.desktop
+  else
+    # Se não encontrar, usa o sed para adicionar a linha
+    sed -i '$ a\Name[pt_BR]=Central de Controle' /usr/share/applications/lxqt-config.desktop
+  fi
+fi
+
+# lxqt-config-file-associations
+echo "Verificando o arquivo lxqt-config-file-associations.desktop"
+if [ -f /usr/share/applications/lxqt-config-file-associations.desktop ]; then
+  # Procura por uma linha que comece com "Name[pt_BR]="
+  if grep -q "^Name\[pt_BR\]=" /usr/share/applications/lxqt-config-file-associations.desktop; then
+    # Se encontrar, usa o sed para editar a linha
+    sed -i 's/^Name\[pt_BR\].*/Name[pt_BR]=Associação de Arquivos/' /usr/share/applications/lxqt-config-file-associations.desktop
+  else
+    # Se não encontrar, usa o sed para adicionar a linha
+    sed -i '$ a\Name[pt_BR]=Associação de Arquivos' /usr/share/applications/lxqt-config-file-associations.desktop
+  fi
+fi
+
+# lxqt-config-input.desktop
+echo "Verificando o arquivo lxqt-config-input.desktop"
+if [ -f /usr/share/applications/lxqt-config-input.desktop ]; then
+  # Procura por uma linha que comece com "Name[pt_BR]="
+  if grep -q "^Name\[pt_BR\]=" /usr/share/applications/lxqt-config-input.desktop; then
+    # Se encontrar, usa o sed para editar a linha
+    sed -i 's/^Name\[pt_BR\].*/Name[pt_BR]=Teclado e Mouse/' /usr/share/applications/lxqt-config-input.desktop
+  else
+    # Se não encontrar, usa o sed para adicionar a linha
+    sed -i '$ a\Name[pt_BR]=Teclado e Mouse' /usr/share/applications/lxqt-config-input.desktop
+  fi
+fi
+
+# tlpui.desktop
+echo "Verificando o arquivo tlpui.desktop"
+	if [ -f /usr/share/applications/tlpui.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/tlpui.desktop
+	fi
+
+# kvantummanager (edita, exclui categoria Utility)
+echo "Verificando o arquivo kvantummanager.desktop"
+	if [ -f /usr/share/applications/kvantummanager.desktop ]; then
+		sed -i '/^Categories/ s/.*/Categories=Settings;DesktopSettings;LXQt;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;X-GNOME-PersonalSettings;/' /usr/share/applications/kvantummanager.desktop
+	# Procura por uma linha que comece com "Name[pt_BR]="
+		if grep -q "^Name\[pt_BR\]=" /usr/share/applications/kvantummanager.desktop; then
+			# Se encontrar, usa o sed para editar a linha
+			sed -i 's/^Name\[pt_BR\].*/Name[pt_BR]=Kvantum/' /usr/share/applications/kvantummanager.desktop
+		else
+			# Se não encontrar, usa o sed para adicionar a linha
+			sed -i '$ a\Name[pt_BR]=Kvantum' /usr/share/applications/kvantummanager.desktop
+		fi
+	fi
+
+# pcmanfm-qt-desktop-pref (Àrea de Trabalho)
+echo "Verificando o arquivo pcmanfm-qt-desktop-pref.deskto"
+if [ -f /usr/share/applications/pcmanfm-qt-desktop-pref.desktop ]; then
+  # Procura por uma linha que comece com "Name[pt_BR]="
+  if grep -q "^Name\[pt_BR\]=" /usr/share/applications/pcmanfm-qt-desktop-pref.desktop; then
+    # Se encontrar, usa o sed para editar a linha
+    sed -i 's/^Name\[pt_BR\].*/Name[pt_BR]=Área de Trabalho/' /usr/share/applications/pcmanfm-qt-desktop-pref.desktop
+  else
+    # Se não encontrar, usa o sed para adicionar a linha
+    sed -i '$ a\Name[pt_BR]=Área de Trabalho' /usr/share/applications/pcmanfm-qt-desktop-pref.desktop
+  fi
+fi
+
+# lxqt locale
+echo "Verificando o arquivo lxqt-config-locale.desktop"
+	if [ -f /usr/share/applications/lxqt-config-locale.desktop ]; then
+		sed -i 's/Name[pt_BR]=.*/Name[pt_BR]=Idiomas/' /usr/share/applications/lxqt-config-locale.desktop
+	fi
+	
+# lxqt brightness
+echo "Verificando o arquivo lxqt-config-brightness.desktop"
+	if [ -f /usr/share/applications/lxqt-config-brightness.desktop ]; then
+		sed -i 's/Name[pt_BR]=.*/Name[pt_BR]=Brilho da Tela/' /usr/share/applications/lxqt-config-brightness.desktop
+	fi
+
+# lxqt notificationd (renomeia)
+echo "Verificando o arquivo lxqt-config-notificationd.desktop"
+	if [ -f /usr/share/applications/lxqt-config-notificationd.desktopp ]; then
+		sed -i "s|Name\[pt_BR\].*|Name[pt_BR]=Notificações|g" /usr/share/applications/lxqt-config-notificationd.desktop
+	fi
+
+# qv4l2 (oculta)
+echo "Verificando o arquivo qv4l2.desktop"
+	if [ -f /usr/share/applications/qv4l2.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/qv4l2.desktop
+	fi
+echo "Verificando o arquivo qvidcap.desktop"
+	if [ -f /usr/share/applications/qvidcap.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/qvidcap.desktop
+	fi
+
+# lstopo.desktop (oculta)
+echo "Verificando o arquivo lstopo.desktop"
+	if [ -f /usr/share/applications/lstopo.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/lstopo.desktop
+	fi
+
+# org.kde.kuserfeedback-console.desktop (oculta)
+echo "Verificando o arquivo org.kde.kuserfeedback-console.desktop"
+if [ -f /usr/share/applications/org.kde.kuserfeedback-console.desktop ]; then
+	sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/org.kde.kuserfeedback-console.desktop
+fi
+
+# appimagelaunchersettings.desktop (Renomeia)
+echo "Verificando o arquivo appimagelaunchersettings.desktop "
+	if [ -f /usr/share/applications/appimagelaunchersettings.desktop  ]; then
+		sed -i '/^Categories/ s/.*/Categories=Settings;DesktopSettings;LXQt;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;X-GNOME-PersonalSettings;/' /usr/share/applications/appimagelaunchersettings.desktop  
+		# Procura por uma linha que comece com "Name[pt_BR]="
+		if grep -q "^Name\[pt_BR\]=" /usr/share/applications/appimagelaunchersettings.desktop ; then
+			# Se encontrar, usa o sed para editar a linha
+			sed -i 's/^Name\[pt_BR\].*/Name[pt_BR]=Configurações do AppImage/' /usr/share/applications/appimagelaunchersettings.desktop 
+		else
+			# Se não encontrar, usa o sed para adicionar a linha
+			sed -i '$ a\Name[pt_BR]=Configurações do AppImage' /usr/share/applications/appimagelaunchersettings.desktop
+		fi
+	fi
+
+# lxqt-about.desktop (Renomeia, muda categoria)
+echo "Verificando o arquivo lxqt-about.desktop "
+	if [ -f /usr/share/applications/lxqt-about.desktop  ]; then
+		sed -i '/^Categories/ s/.*/Categories=Settings;DesktopSettings;LXQt;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;X-GNOME-PersonalSettings;/' /usr/share/applications/lxqt-about.desktop  
+			# Procura por uma linha que comece com "Name[pt_BR]="
+		if grep -q "^Name\[pt_BR\]=" /usr/share/applications/lxqt-about.desktop ; then
+			# Se encontrar, usa o sed para editar a linha
+			sed -i 's/^Name\[pt_BR\].*/Name[pt_BR]=Sobre o LXQt/' /usr/share/applications/lxqt-about.desktop 
+		else
+			# Se não encontrar, usa o sed para adicionar a linha
+			sed -i '$ a\Name[pt_BR]=Sobre o LXQt' /usr/share/applications/lxqt-about.desktop
+		fi
+	fi
+
+# designer.desktop (oculta)
+echo "Verificando o arquivo designer.desktop"
+	if [ -f /usr/share/applications/designer.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/designer.desktop
+	fi
+
+# assistant.desktop (oculta)
+echo "Verificando o arquivo assistant.desktop"
+	if [ -f /usr/share/applications/assistant.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/assistant.desktop
+	fi
+
+# linguist.desktop (oculta)
+echo "Verificando o arquivo linguist.desktop"
+	if [ -f /usr/share/applications/linguist.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/linguist.desktop
+	fi
+
+# qdbusviewer.desktop (oculta)
+echo "Verificando o arquivo qdbusviewer.desktop"
+	if [ -f /usr/share/applications/qdbusviewer.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/qdbusviewer.desktop
+	fi
+
+# lftp.desktop (oculta)
+echo "Verificando o arquivo lftp.desktop"
+	if [ -f /usr/share/applications/lftp.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/lftp.desktop
+	fi
+
+# uxterm.desktop (oculta)
+echo "Verificando o arquivo uxterm.desktop"
+	if [ -f /usr/share/applications/uxterm.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/uxterm.desktop
+	fi
+
+# xterm.desktop (oculta)
+echo "Verificando o arquivo xterm.desktopp"
+	if [ -f /usr/share/applications/xterm.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/xterm.desktop
+	fi
+
+# org.kde.drkonqi.coredump.gui.desktop (oculta)
+echo "Verificando o arquivo org.kde.drkonqi.coredump.gui.desktop"
+	if [ -f /usr/share/applications/org.kde.drkonqi.coredump.gui.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/org.kde.drkonqi.coredump.gui.desktop
+	fi
+
+# org.kde.drkonqi.desktop (oculta)
+echo "Verificando o arquivo org.kde.drkonqi.desktop"
+	if [ -f /usr/share/applications/org.kde.drkonqi.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/org.kde.drkonqi.desktop
+	fi
+
+# urxvt-tabbed (oculta)
+echo "Verificando o arquivo urxvt-tabbed.desktop"
+	if [ -f /usr/share/applications/urxvt-tabbed.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/urxvt-tabbed.desktop
+	fi
+
+# urxvt (oculta)
+echo "Verificando o arquivo urxvt.desktop"
+	if [ -f /usr/share/applications/urxvt.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/urxvt.desktop
+	fi
+
+# urxvtc (oculta)
+echo "Verificando o arquivo urxvtc.desktop"
+	if [ -f /usr/share/applications/urxvtc.desktop ]; then
+		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/urxvtc.desktop
+	fi

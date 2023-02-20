@@ -1,0 +1,11 @@
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/share/applications/blender.desktop
+Target = usr/share/applications/com.obsproject.Studio.desktop
+
+[Action]
+Description = add software render to application
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/softwarerender

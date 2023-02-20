@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # kate (renomeia)
-	# echo "Verificando o arquivo org.kde.kate.desktop"
+# echo "Verificando o arquivo org.kde.kate.desktop"
 # 	if [ -f /usr/share/applications/org.kde.kate.desktop ]; then
 #		sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Anotações|g;s|Comment\[pt_BR\]=.*|Comment[pt_BR]=|g;s|GenericName\[pt_BR\]=.*|GenericName[pt_BR]=|g;s|Development;||g' /usr/share/applications/org.kde.kate.desktop
 #	fi
@@ -26,17 +26,17 @@ fi
 
 # pcmanfm-qt-desktop (renomeia e oculta no Plasma)
 echo "Verificando o arquivo pcmanfm-qt.desktop"
-	if [ -f /usr/share/applications/pcmanfm-qt.desktop ]; then
-		sed -i 's|Categories=|NotShowIn=KDE\nCategories=|' /usr/share/applications/pcmanfm-qt.desktop
-		PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/pcmanfm-qt.desktop)
+if [ -f /usr/share/applications/pcmanfm-qt.desktop ]; then
+	sed -i 's|Categories=|NotShowIn=KDE\nCategories=|' /usr/share/applications/pcmanfm-qt.desktop
+	PT_BR_LINE=$(grep "^Name\[pt_BR\]=" /usr/share/applications/pcmanfm-qt.desktop)
 	if [ -z "$PT_BR_LINE" ]; then
-		# Linha Name[pt_BR]= NÃO foi encontrada
-		sed -i '$ a\Name[pt_BR]=Gerenciador de Arquivos' /usr/share/applications/pcmanfm-qt.desktop
+	# Linha Name[pt_BR]= NÃO foi encontrada
+	sed -i '$ a\Name[pt_BR]=Gerenciador de Arquivos' /usr/share/applications/pcmanfm-qt.desktop
 	else
-		# Linha Name[pt_BR]= FOI encontrada
-		sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Gerenciador de Arquivos/" /usr/share/applications/pcmanfm-qt.desktop
+	# Linha Name[pt_BR]= FOI encontrada
+	sed -i "s/^Name\[pt_BR\]=.*/Name[pt_BR]=Gerenciador de Arquivos/" /usr/share/applications/pcmanfm-qt.desktop
 	fi
-	fi
+fi
 
 # kdenlive (força execução em QT)
 echo "Verificando o arquivo org.kde.kdenlive.desktop"

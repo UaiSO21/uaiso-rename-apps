@@ -719,3 +719,9 @@ echo "Verificando o arquivo urxvtc.desktop"
 	if [ -f /usr/share/applications/urxvtc.desktop ]; then
 		sed -i 's|Categories=|NoDisplay=true\nCategories=|' /usr/share/applications/urxvtc.desktop
 	fi
+
+# onlyoffice-desktopeditors.desktop
+echo "Verificando o arquivo onlyoffice-desktopeditors.desktop"
+	if [ -f /usr/share/applications/onlyoffice-desktopeditors.desktop ]; then
+		sed -i 's/Name[pt_BR]=.*/Name[pt_BR]=OnlyOffice/' /usr/share/applications/onlyoffice-desktopeditors.desktop
+	fi
